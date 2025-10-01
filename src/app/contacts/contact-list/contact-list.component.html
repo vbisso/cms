@@ -10,23 +10,10 @@
 
     <!--panel body-->
     <div>
-      <a
-        href="#"
-        class="list-group-item clearfix"
+      <app-contact-item
         *ngFor="let contact of contacts"
-      >
-        <div class="pull-left">
-          <h4 class="list-group-item-heading">{{ contact.name }}</h4>
-        </div>
-        <div class="pull-right">
-          <img
-            src="{{ contact.imageUrl }}"
-            alt="{{ contact.name }}"
-            class="img-responsive"
-            style="max-height: 80px"
-          />
-        </div>
-      </a>
+        [contact]="contact"
+      ></app-contact-item>
     </div>
   </div>
 </div>
