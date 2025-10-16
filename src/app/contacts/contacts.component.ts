@@ -7,8 +7,9 @@ import { ContactService } from './contact.service';
   standalone: false,
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
+  providers: [ContactService],
 })
-export class ContactsComponent {
+export class ContactsComponent implements OnInit {
   selectedContact: Contact | null = null; //holds the clicked contact to later pass it down to contact-detail component
 
   constructor(private contactService: ContactService) {}

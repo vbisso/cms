@@ -2,12 +2,16 @@
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{ contact.name }}</h4>
   </div>
-  <div class="pull-right">
+
+  <div
+    class="pull-right"
+    *ngIf="contact.imageUrl && contact.imageUrl.trim() !== ''"
+  >
     <img
-      src="{{ contact.imageUrl }}"
-      alt="{{ contact.name }}"
+      [src]="contact.imageUrl"
+      [alt]="contact.name"
       class="img-responsive"
-      style="max-height: 80px"
+      style="max-height: 50px"
     />
   </div>
 </a>

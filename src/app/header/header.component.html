@@ -6,9 +6,30 @@
 
     <div class="collapse navbar-collapse">
       <div class="nav navbar-nav">
-        <li><a href="" (click)="onSelected('documents')">Documents</a></li>
-        <li><a href="#" (click)="onSelected('messages')">Messages</a></li>
-        <li><a href="#" (click)="onSelected('contacts')">Contacts</a></li>
+        <li>
+          <button
+            class="btn btn-link navbar-btn"
+            (click)="onSelected('documents')"
+          >
+            Documents
+          </button>
+        </li>
+        <li>
+          <button
+            class="btn btn-link navbar-btn"
+            (click)="onSelected('messages')"
+          >
+            Messages
+          </button>
+        </li>
+        <li>
+          <button
+            class="btn btn-link navbar-btn"
+            (click)="onSelected('contacts')"
+          >
+            Contacts
+          </button>
+        </li>
       </div>
 
       <div class="nav navbar-nav navbar-right">
