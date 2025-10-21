@@ -5,42 +5,15 @@
     </div>
 
     <div class="collapse navbar-collapse">
-      <div class="nav navbar-nav">
-        <li>
-          <button
-            class="btn btn-link navbar-btn"
-            (click)="onSelected('documents')"
-          >
-            Documents
-          </button>
+      <div class="navbar-nav">
+        <li routerLinkActive="active">
+          <a class="nav-link" routerLink="/documents">Documents</a>
         </li>
-        <li>
-          <button
-            class="btn btn-link navbar-btn"
-            (click)="onSelected('messages')"
-          >
-            Messages
-          </button>
+        <li routerLinkActive="active">
+          <a class="nav-link" routerLink="/messages">Messages</a>
         </li>
-        <li>
-          <button
-            class="btn btn-link navbar-btn"
-            (click)="onSelected('contacts')"
-          >
-            Contacts
-          </button>
-        </li>
-      </div>
-
-      <div class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a href="#" class="dropdown-toggle">
-            User <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Edit</a></li>
-            <li><a href="#">Delete</a></li>
-          </ul>
+        <li routerLinkActive="active">
+          <a class="nav-link" routerLink="/contacts">Contacts</a>
         </li>
       </div>
     </div>
