@@ -5,6 +5,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { DocumentDetailComponent } from './documents/document-detail/document-detail.component';
+import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
+import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 
 const appRoutes: Routes = [
   { path: ' ', redirectTo: '/documents', pathMatch: 'full' },
@@ -18,7 +20,15 @@ const appRoutes: Routes = [
     ],
   },
   { path: 'messages', component: MessagesComponent },
-  { path: 'contacts', component: ContactsComponent },
+  {
+    path: 'contacts',
+    component: ContactsComponent,
+    children: [
+      { path: 'new', component: ContactEditComponent },
+      { path: ':id', component: ContactDetailComponent },
+      { path: ':id/edit', component: ContactEditComponent },
+    ],
+  },
 ];
 // Use the @NgModule annotation to create a new module. Import the RouterModule module and define the root route in the imports property. Set the value of the exports property to export the RouterModule.
 // Define the AppRoutingModule class and export it.

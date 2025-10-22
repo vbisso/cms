@@ -1,21 +1,21 @@
 <div class="panel panel-default">
   <div class="panel-heading clearfix">
-    <h3 class="panel-title pull-left">{{ contact.name }}</h3>
+    <h3 class="panel-title pull-left">{{ contact?.name }}</h3>
     <img
-      [src]="contact.imageUrl"
-      [alt]="contact.name"
+      [src]="contact?.imageUrl"
+      [alt]="contact?.name"
       class="pull-left img-responsive"
       style="max-height: 50px; margin-left: 10px"
     />
 
     <div class="btn-group pull-right">
-      <a href="#" class="btn btn-primary">Edit</a>
-      <a href="#" class="btn btn-danger">Delete</a>
+      <a class="btn btn-primary" [routerLink]="['edit']">Edit</a>
+      <a class="btn btn-danger" (click)="onDelete()">Delete</a>
     </div>
   </div>
 
   <div class="panel-body">
-    <p><strong>Email:</strong> {{ contact.email }}</p>
-    <p><strong>Phone:</strong> {{ contact.phone }}</p>
+    <p><strong>Email:</strong> {{ contact?.email }}</p>
+    <p><strong>Phone:</strong> {{ contact?.phone }}</p>
   </div>
 </div>

@@ -4,7 +4,9 @@
     <div class="panel panel-default text-center">
       <div class="panel-heading clearfix">
         <h3 class="pull-left panel-title">Contacts</h3>
-        <a href="#" class="btn btn-success pull-right">New Contact</a>
+        <a href="#" class="btn btn-success pull-right" [routerLink]="['new']"
+          >New Contact</a
+        >
       </div>
     </div>
 
@@ -13,7 +15,6 @@
       <app-contact-item
         *ngFor="let contact of contacts"
         [contact]="contact"
-        (click)="onSelected(contact)"
       ></app-contact-item>
     </div>
   </div>

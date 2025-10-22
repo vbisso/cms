@@ -4,9 +4,13 @@
       <h4 class="title margin-left-right">{{ document?.name }}</h4>
 
       <div class="row pull-right margin-left-right">
-        <a class="btn btn-primary margin-left-right">View</a>
-        <a class="btn btn-info margin-left-right">Edit</a>
-        <a class="btn btn-danger margin-left-right">Delete</a>
+        <a class="btn btn-primary margin-left-right" (click)="onView()">View</a>
+        <a class="btn btn-info margin-left-right" [routerLink]="['edit']"
+          >Edit</a
+        >
+        <a class="btn btn-danger margin-left-right" (click)="onDelete()"
+          >Delete</a
+        >
       </div>
     </div>
   </div>
