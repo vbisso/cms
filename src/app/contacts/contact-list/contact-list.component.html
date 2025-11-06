@@ -11,10 +11,17 @@
     </div>
 
     <!--panel body-->
-    <div>
+    <div
+      cdkDropList
+      #allContactsList="cdkDropList"
+      [cdkDropListData]="contacts"
+      [cdkDropListConnectedTo]="['groupList']"
+      (cdkDropListDropped)="onDrop($event)"
+    >
       <app-contact-item
         *ngFor="let contact of contacts"
         [contact]="contact"
+        cdkDrag
       ></app-contact-item>
     </div>
   </div>

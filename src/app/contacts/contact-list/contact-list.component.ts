@@ -2,6 +2,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
 import { Subscription } from 'rxjs';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-contact-list',
@@ -25,5 +30,8 @@ export class ContactListComponent implements OnInit {
         this.contacts = contacts;
       }
     );
+  }
+  onDrop(event: CdkDragDrop<Contact[]>) {
+    moveItemInArray(this.contacts, event.previousIndex, event.currentIndex);
   }
 }

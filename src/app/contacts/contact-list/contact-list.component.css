@@ -1,0 +1,14 @@
+.contact-list-dropzone {
+  border: 2px dashed #ccc;
+  min-height: 150px;
+  padding: 10px;
+}
+
+.contact-item {
+  margin-bottom: 5px;
+  cursor: grab;
+}
+
+.contact-item:active {
+  cursor: grabbing;
+}

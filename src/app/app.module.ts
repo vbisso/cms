@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 
+import { DragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+
 import { HeaderComponent } from './header/header.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
@@ -43,7 +45,7 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
     DocumentEditComponent,
     ContactEditComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, DragDropModule],
 
   providers: [],
   bootstrap: [AppComponent],
