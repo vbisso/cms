@@ -17,11 +17,12 @@ import {
 export class ContactListComponent implements OnInit {
   contacts: Contact[] = [];
   subscription!: Subscription;
+  term: string = '';
 
   constructor(private contactService: ContactService) {}
 
   ngOnInit() {
-    this.contacts = this.contactService.getContacts();
+    this.contactService.getContacts();
     this.contactService.contactChangedEvent.subscribe((contacts: Contact[]) => {
       this.contacts = contacts;
     });
@@ -33,5 +34,8 @@ export class ContactListComponent implements OnInit {
   }
   onDrop(event: CdkDragDrop<Contact[]>) {
     moveItemInArray(this.contacts, event.previousIndex, event.currentIndex);
+  }
+  search(value: string) {
+    this.term = value;
   }
 }

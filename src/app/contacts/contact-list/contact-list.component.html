@@ -2,11 +2,34 @@
   <div class="col-md-12">
     <!--panel header-->
     <div class="panel panel-default text-center">
-      <div class="panel-heading clearfix">
-        <h3 class="pull-left panel-title">Contacts</h3>
-        <a href="#" class="btn btn-success pull-right" [routerLink]="['new']"
-          >New Contact</a
-        >
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="row">
+                <span class="title pad-left-right">Contacts</span>
+              </div>
+              <div class="row">
+                <div class="input-group pull-left pad-left-right col-xs-7">
+                  <input
+                    (keyup)="search(searchBox.value)"
+                    placeholder="Enter a search value"
+                    #searchBox
+                  />
+                  <div
+                    class="glyphicon glyphicon-search input-group-addon"
+                    (click)="search(searchBox.value)"
+                  ></div>
+                </div>
+                <div class="pull-right pad-left-right">
+                  <a class="btn btn-success" [routerLink]="['new']"
+                    >New Contact</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -19,7 +42,7 @@
       (cdkDropListDropped)="onDrop($event)"
     >
       <app-contact-item
-        *ngFor="let contact of contacts"
+        *ngFor="let contact of contacts | contactsFilter : term"
         [contact]="contact"
         cdkDrag
       ></app-contact-item>
