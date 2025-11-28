@@ -39,28 +39,36 @@ export class MessageService {
     return null;
   }
 
-  addMessage(message: Message) {
-    this.messages.push(message);
-    this.storeMessages();
+  addMessage(newMessage: Message) {
+    if (!newMessage) {
+      return;
+    }
+    newMessage.id = '';
+    const header = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http
+      .post<{ message: string; msg: Message }>(
+        'http://localhost:3000/messages',
+        newMessage,
+        { headers: header }
+      )
+      .subscribe((responseData) => {
+        this.messages.push(responseData.msg);
+      });
   }
 
   getMessages() {
-    this.http
-      .get<Message[]>(
-        'https://vbcms-31961-default-rtdb.firebaseio.com/messages.json'
-      )
-      .subscribe(
-        //called when HTTP Get request is successful
-        (messages: Message[]) => {
-          this.messages = messages;
-          this.maxMessageId = this.getMaxId();
+    this.http.get<Message[]>('http://localhost:3000/messages').subscribe(
+      //called when HTTP Get request is successful
+      (messages: Message[]) => {
+        this.messages = messages;
+        this.maxMessageId = this.getMaxId();
 
-          this.messageChangedEvent.next(this.messages.slice());
-        },
-        (error: any) => {
-          console.error('Error:', error);
-        }
-      );
+        this.messageChangedEvent.next(this.messages.slice());
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
   }
 
   storeMessages() {
@@ -78,4 +86,10 @@ export class MessageService {
         this.messageChangedEvent.next(this.messages.slice()); //cloned array
       });
   }
+  // private sortAndSend() {
+  //   this.messages.sort((a, b) =>
+  //     a.id.toLowerCase() < b.id.toLowerCase() ? -1 : 1
+  //   );
+  //   this.messageChangedEvent.next(this.messages.slice());
+  // }
 }

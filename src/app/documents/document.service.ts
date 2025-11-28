@@ -46,75 +46,122 @@ export class DocumentService {
     if (!newDocument) {
       return;
     }
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument);
+    newDocument.id = '';
 
-    this.storeDocuments();
+    const header = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http
+      .post<{ message: string; document: Document }>(
+        'http://localhost:3000/documents',
+        newDocument,
+        { headers: header }
+      )
+      .subscribe((responseData) => {
+        this.documents.push(responseData.document);
+        this.sortAndSend();
+      });
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) {
       return;
     }
-    const pos = this.documents.indexOf(originalDocument);
+
+    // find index of original document
+    const pos = this.documents.findIndex((d) => d.id === originalDocument.id);
     if (pos < 0) {
       return;
     }
+
+    // keep the same IDs
     newDocument.id = originalDocument.id;
-    this.documents[pos] = newDocument;
-    this.storeDocuments();
+    // newDocument._id = originalDocument._id;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // update on the database
+    this.http
+      .put(
+        'http://localhost:3000/documents/' + originalDocument.id,
+        newDocument,
+        { headers: headers }
+      )
+      .subscribe({
+        next: () => {
+          // update the local list
+          this.documents[pos] = newDocument;
+          this.sortAndSend();
+        },
+        error: (error) => {
+          console.error('Error updating document:', error);
+        },
+      });
   }
 
   deleteDocument(document: Document) {
     if (!document) {
       return;
     }
-    const pos = this.documents.indexOf(document);
+
+    const pos = this.documents.findIndex((d) => d.id === document.id);
     if (pos < 0) {
       return;
     }
-    this.documents.splice(pos, 1);
-    this.storeDocuments();
+
+    // delete from database
+    this.http
+      .delete('http://localhost:3000/documents/' + document.id)
+      .subscribe({
+        next: () => {
+          // remove from local array
+          this.documents.splice(pos, 1);
+          this.sortAndSend();
+        },
+        error: (err) => {
+          console.error('Error deleting document:', err);
+        },
+      });
   }
 
   getDocuments() {
-    this.http
-      .get<Document[]>(
-        'https://vbcms-31961-default-rtdb.firebaseio.com/documents.json'
-      )
-      .subscribe(
-        //called when HTTP Get request is successful
-        (documents: Document[]) => {
-          this.documents = documents;
-          this.maxDocumentId = this.getMaxId();
+    this.http.get<Document[]>('http://localhost:3000/documents').subscribe(
+      //called when HTTP Get request is successful
+      (documents: Document[]) => {
+        this.documents = documents;
+        this.maxDocumentId = this.getMaxId();
 
-          this.documents.sort((a, b) => {
-            if (a.name < b.name) return -1;
-            if (a.name > b.name) return 1;
-            return 0;
-          });
-          this.documentListChangedEvent.next(this.documents.slice());
-        },
-        (error: any) => {
-          console.error('Error:', error);
-        }
-      );
+        this.documents.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        });
+        this.documentListChangedEvent.next(this.documents.slice());
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
   }
 
-  storeDocuments() {
-    const documentJSON = JSON.stringify(this.documents);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http
-      .put(
-        'https://vbcms-31961-default-rtdb.firebaseio.com/documents.json',
-        documentJSON,
-        {
-          headers,
-        }
-      )
-      .subscribe(() => {
-        this.documentListChangedEvent.next(this.documents.slice()); //cloned array
-      });
+  private sortAndSend() {
+    this.documents.sort((a, b) =>
+      a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+    );
+    this.documentListChangedEvent.next(this.documents.slice());
   }
+
+  //   storeDocuments() {
+  //     const documentJSON = JSON.stringify(this.documents);
+  //     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //     this.http
+  //       .put(
+  //         'https://vbcms-31961-default-rtdb.firebaseio.com/documents.json',
+  //         documentJSON,
+  //         {
+  //           headers,
+  //         }
+  //       )
+  //       .subscribe(() => {
+  //         this.documentListChangedEvent.next(this.documents.slice()); //cloned array
+  //       });
+  //   }
 }

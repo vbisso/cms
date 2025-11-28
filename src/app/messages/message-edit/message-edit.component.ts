@@ -18,7 +18,7 @@ export class MessageEditComponent {
   @ViewChild('subject') subjectInputRef!: ElementRef;
   @ViewChild('msgText') msgTextInputRef!: ElementRef;
 
-  currentSender: string = 'Valeria';
+  currentSender: string = '6928f0224772d956a8c4c607';
 
   constructor(private messageService: MessageService) {}
 
